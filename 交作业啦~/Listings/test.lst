@@ -1,0 +1,573 @@
+C51 COMPILER V9.59.0.0   TEST                                                              07/04/2021 23:34:04 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\Objects\test.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE test.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\test
+                    -.lst) TABS(2) OBJECT(.\Objects\test.obj)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          
+   3          void Switch_S1(void);
+   4          void Switch_S2(void);
+   5          void Switch_S3(void);
+   6          void Switch_S4(void);
+   7          void delayms(unsigned int ms);
+   8          void delay(unsigned int a);
+   9          
+  10          
+  11          sbit S_r1 = P3^0;
+  12          sbit S_r2 = P3^1;
+  13          sbit S_r3 = P3^2;
+  14          sbit S_r4 = P3^3;
+  15          sbit S_c1 = P3^7;
+  16          sbit S_c2 = P3^6;
+  17          sbit S_c3 = P3^5;
+  18          sbit S_c4 = P3^4;
+  19          
+  20          unsigned char Mybirthday[]={0XA4,0XC0,0Xc0,0X79,0XC0,0X24,0XA4,0X99};
+  21          unsigned char STID[]={0XA4,0XC0,0XA4,0XC0,0XC0,0XF9,0XB0,0XB0,0X92,0XF8,0xff,0xff,0xff,0xff,0xff,0xff,0xff
+             -};
+  22          unsigned char tab[10]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90};
+  23          
+  24          void main(void)
+  25          {
+  26   1        S_r2=0;
+  27   1        while(1)
+  28   1        {
+  29   2          if(S_c2==0)
+  30   2          {
+  31   3            delayms(50);
+  32   3            if(S_c2==0)
+  33   3            {
+  34   4              while(1)
+  35   4                Switch_S2();
+  36   4            }
+  37   3          }
+  38   2          else if(S_c3==0)
+  39   2            {
+  40   3              delayms(50);
+  41   3              if(S_c3==0)
+  42   3              {
+  43   4                while(1)
+  44   4                Switch_S3();
+  45   4              }
+  46   3            }
+  47   2          else if(S_c1==0)
+  48   2          {
+  49   3            delayms(50);
+  50   3            if(S_c1==0)
+  51   3            { 
+  52   4              while(!S_c1)
+  53   4              {
+C51 COMPILER V9.59.0.0   TEST                                                              07/04/2021 23:34:04 PAGE 2   
+
+  54   5                Switch_S1();
+  55   5              }
+  56   4            }
+  57   3          }
+  58   2          else if(S_c4==0)
+  59   2          {
+  60   3            delayms(50);
+  61   3            if(S_c4==0)
+  62   3            {
+  63   4              while(1)
+  64   4              Switch_S4();
+  65   4            }
+  66   3          }
+  67   2        }
+  68   1      }
+  69          
+  70          void Switch_S1(void)
+  71          {
+  72   1        unsigned char a;
+  73   1        unsigned char LED;
+  74   1        
+  75   1        for(a=0;a<3;a++)
+  76   1        {
+  77   2          for(LED=0;LED<8;LED++)
+  78   2          {
+  79   3            P1=~(0X01<<LED);
+  80   3            LED+=1;
+  81   3            delayms(30);
+  82   3          }
+  83   2          for(LED=0;LED<8;LED++)
+  84   2          {
+  85   3            P1=~(0X02<<LED);
+  86   3            LED+=1;
+  87   3            delayms(30);
+  88   3          }
+  89   2        }
+  90   1        
+  91   1        for(a=0;a<3;a++)
+  92   1        {
+  93   2          for(LED=0;LED<8;LED++)
+  94   2          {
+  95   3            P1=~(0X01<<LED);
+  96   3            delayms(30);
+  97   3          }
+  98   2          for(LED=0;LED<8;LED++)
+  99   2          {
+ 100   3            P1=~(0X80>>LED);
+ 101   3            delayms(30);
+ 102   3          }
+ 103   2        }
+ 104   1        for(a=0;a<3;a++)
+ 105   1        {
+ 106   2          for(LED=0;LED<4;LED++)
+ 107   2          {
+ 108   3            P1=~(0X01<<LED)&~(0x80>>LED);
+ 109   3            delayms(30);
+ 110   3          }
+ 111   2        }
+ 112   1        for(a=0;a<3;a++)
+ 113   1        {
+ 114   2          for(LED=0;LED<4;LED++)
+ 115   2          {
+C51 COMPILER V9.59.0.0   TEST                                                              07/04/2021 23:34:04 PAGE 3   
+
+ 116   3            P1=~(0X08>>LED)&~(0x10<<LED);
+ 117   3            delayms(30);
+ 118   3          }
+ 119   2        }
+ 120   1        for(a=0;a<3;a++)
+ 121   1        {
+ 122   2          P1=~(0XFF);
+ 123   2          delayms(30);
+ 124   2          P1=~(0X00);
+ 125   2          delayms(30);
+ 126   2        }
+ 127   1      }
+ 128          
+ 129          void Switch_S2(void)
+ 130          {
+ 131   1        P2=0X01;P0=tab[2];
+ 132   1        delay(20);
+ 133   1        P2=0X01<<1;P0=tab[0];
+ 134   1        delay(20);
+ 135   1        P2=0X01<<2;P0=tab[0];
+ 136   1        delay(20);
+ 137   1        P2=0X01<<3;P0=0x79;
+ 138   1        delay(20);
+ 139   1        P2=0X01<<4;P0=tab[0];
+ 140   1        delay(20);
+ 141   1        P2=0X01<<5;P0=0x24;
+ 142   1        delay(20);
+ 143   1        P2=0X01<<6;P0=tab[2];
+ 144   1        delay(20);
+ 145   1        P2=0X01<<7;P0=tab[4];
+ 146   1        delay(20);
+ 147   1      }
+ 148          
+ 149          void Switch_S3(void)
+ 150          {
+ 151   1        unsigned int a,b,c,d,e,f,g,h;
+ 152   1        
+ 153   1        for(a=0;a<2000;a++)
+ 154   1        {
+ 155   2        P2=0x80;P0=Mybirthday[0];
+ 156   2        delay(20);
+ 157   2        }
+ 158   1        for(b=0;b<1500;b++)
+ 159   1        {
+ 160   2        P2=0x80>>1;P0=Mybirthday[0];
+ 161   2        delay(20);
+ 162   2        P2=0X80;P0=Mybirthday[1];
+ 163   2        delay(20);
+ 164   2        }
+ 165   1        for(c=0;c<1100;c++)
+ 166   1        {
+ 167   2          P2=0x80>>2;P0=Mybirthday[0];
+ 168   2          delay(20);
+ 169   2          P2=0X80>>1;P0=Mybirthday[1];
+ 170   2          delay(20);
+ 171   2          P2=0x80;P0=Mybirthday[2];
+ 172   2          delay(20);
+ 173   2        }
+ 174   1        for(d=0;d<800;d++)
+ 175   1        {
+ 176   2          P2=0x80>>3;P0=Mybirthday[0];
+ 177   2          delay(20);
+C51 COMPILER V9.59.0.0   TEST                                                              07/04/2021 23:34:04 PAGE 4   
+
+ 178   2          P2=0X80>>2;P0=Mybirthday[1];
+ 179   2          delay(20);
+ 180   2          P2=0x80>>1;P0=Mybirthday[2];
+ 181   2          delay(20);
+ 182   2          P2=0x80;P0=Mybirthday[3];
+ 183   2          delay(20);
+ 184   2        }
+ 185   1        for(e=0;e<666;e++)
+ 186   1        {
+ 187   2          P2=0x80>>4;P0=Mybirthday[0];
+ 188   2          delay(20);
+ 189   2          P2=0X80>>3;P0=Mybirthday[1];
+ 190   2          delay(20);
+ 191   2          P2=0x80>>2;P0=Mybirthday[2];
+ 192   2          delay(20);
+ 193   2          P2=0x80>>1;P0=Mybirthday[3];
+ 194   2          delay(20);
+ 195   2          P2=0x80;P0=Mybirthday[4];
+ 196   2          delay(20);
+ 197   2        }
+ 198   1        for(f=0;f<550;f++)
+ 199   1        {
+ 200   2          P2=0x80>>5;P0=Mybirthday[0];
+ 201   2          delay(20);
+ 202   2          P2=0X80>>4;P0=Mybirthday[1];
+ 203   2          delay(20);
+ 204   2          P2=0x80>>3;P0=Mybirthday[2];
+ 205   2          delay(20);
+ 206   2          P2=0x80>>2;P0=Mybirthday[3];
+ 207   2          delay(20);
+ 208   2          P2=0x80>>1;P0=Mybirthday[4];
+ 209   2          delay(20);
+ 210   2          P2=0x80;P0=Mybirthday[5];
+ 211   2          delay(20);
+ 212   2        }
+ 213   1        for(g=0;g<500;g++)
+ 214   1        {
+ 215   2          P2=0x80>>6;P0=Mybirthday[0];
+ 216   2          delay(20);
+ 217   2          P2=0X80>>5;P0=Mybirthday[1];
+ 218   2          delay(20);
+ 219   2          P2=0x80>>4;P0=Mybirthday[2];
+ 220   2          delay(20);
+ 221   2          P2=0x80>>3;P0=Mybirthday[3];
+ 222   2          delay(20);
+ 223   2          P2=0x80>>2;P0=Mybirthday[4];
+ 224   2          delay(20);
+ 225   2          P2=0x80>>1;P0=Mybirthday[5];
+ 226   2          delay(20);
+ 227   2          P2=0x80;P0=Mybirthday[6];
+ 228   2          delay(20);
+ 229   2        }
+ 230   1        for(h=0;h<4000;h++)
+ 231   1        {
+ 232   2          P2=0x80>>7;P0=Mybirthday[0];
+ 233   2          delay(20);
+ 234   2          P2=0X80>>6;P0=Mybirthday[1];
+ 235   2          delay(20);
+ 236   2          P2=0x80>>5;P0=Mybirthday[2];
+ 237   2          delay(20);
+ 238   2          P2=0x80>>4;P0=Mybirthday[3];
+ 239   2          delay(20);
+C51 COMPILER V9.59.0.0   TEST                                                              07/04/2021 23:34:04 PAGE 5   
+
+ 240   2          P2=0x80>>3;P0=Mybirthday[4];
+ 241   2          delay(20);
+ 242   2          P2=0x80>>2;P0=Mybirthday[5];
+ 243   2          delay(20);
+ 244   2          P2=0x80>>1;P0=Mybirthday[6];
+ 245   2          delay(20);
+ 246   2          P2=0x80;P0=Mybirthday[7];
+ 247   2          delay(20);
+ 248   2        }
+ 249   1      }
+ 250          
+ 251          void Switch_S4(void)
+ 252          {
+ 253   1        unsigned int a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q;
+ 254   1        
+ 255   1        for(a=0;a<2000;a++)
+ 256   1        {
+ 257   2        P2=0x80;P0=STID[0];
+ 258   2        delay(20);
+ 259   2        }
+ 260   1        for(b=0;b<1500;b++)
+ 261   1        {
+ 262   2        P2=0x80>>1;P0=STID[0];
+ 263   2        delay(20);
+ 264   2        P2=0X80;P0=STID[1];
+ 265   2        delay(20);
+ 266   2        }
+ 267   1        for(c=0;c<1100;c++)
+ 268   1        {
+ 269   2          P2=0x80>>2;P0=STID[0];
+ 270   2          delay(20);
+ 271   2          P2=0X80>>1;P0=STID[1];
+ 272   2          delay(20);
+ 273   2          P2=0x80;P0=STID[2];
+ 274   2          delay(20);
+ 275   2        }
+ 276   1        for(d=0;d<800;d++)
+ 277   1        {
+ 278   2          P2=0x80>>3;P0=STID[0];
+ 279   2          delay(20);
+ 280   2          P2=0X80>>2;P0=STID[1];
+ 281   2          delay(20);
+ 282   2          P2=0x80>>1;P0=STID[2];
+ 283   2          delay(20);
+ 284   2          P2=0x80;P0=STID[3];
+ 285   2          delay(20);
+ 286   2        }
+ 287   1        for(e=0;e<666;e++)
+ 288   1        {
+ 289   2          P2=0x80>>4;P0=STID[0];
+ 290   2          delay(20);
+ 291   2          P2=0X80>>3;P0=STID[1];
+ 292   2          delay(20);
+ 293   2          P2=0x80>>2;P0=STID[2];
+ 294   2          delay(20);
+ 295   2          P2=0x80>>1;P0=STID[3];
+ 296   2          delay(20);
+ 297   2          P2=0x80;P0=STID[4];
+ 298   2          delay(20);
+ 299   2        }
+ 300   1        for(f=0;f<550;f++)
+ 301   1        {
+C51 COMPILER V9.59.0.0   TEST                                                              07/04/2021 23:34:04 PAGE 6   
+
+ 302   2          P2=0x80>>5;P0=STID[0];
+ 303   2          delay(20);
+ 304   2          P2=0X80>>4;P0=STID[1];
+ 305   2          delay(20);
+ 306   2          P2=0x80>>3;P0=STID[2];
+ 307   2          delay(20);
+ 308   2          P2=0x80>>2;P0=STID[3];
+ 309   2          delay(20);
+ 310   2          P2=0x80>>1;P0=STID[4];
+ 311   2          delay(20);
+ 312   2          P2=0x80;P0=STID[5];
+ 313   2          delay(20);
+ 314   2        }
+ 315   1        for(g=0;g<500;g++)
+ 316   1        {
+ 317   2          P2=0x80>>6;P0=STID[0];
+ 318   2          delay(20);
+ 319   2          P2=0X80>>5;P0=STID[1];
+ 320   2          delay(20);
+ 321   2          P2=0x80>>4;P0=STID[2];
+ 322   2          delay(20);
+ 323   2          P2=0x80>>3;P0=STID[3];
+ 324   2          delay(20);
+ 325   2          P2=0x80>>2;P0=STID[4];
+ 326   2          delay(20);
+ 327   2          P2=0x80>>1;P0=STID[5];
+ 328   2          delay(20);
+ 329   2          P2=0x80;P0=STID[6];
+ 330   2          delay(20);
+ 331   2        }
+ 332   1        for(h=0;h<420;h++)
+ 333   1        {
+ 334   2          P2=0x80>>7;P0=STID[0];
+ 335   2          delay(20);
+ 336   2          P2=0X80>>6;P0=STID[1];
+ 337   2          delay(20);
+ 338   2          P2=0x80>>5;P0=STID[2];
+ 339   2          delay(20);
+ 340   2          P2=0x80>>4;P0=STID[3];
+ 341   2          delay(20);
+ 342   2          P2=0x80>>3;P0=STID[4];
+ 343   2          delay(20);
+ 344   2          P2=0x80>>2;P0=STID[5];
+ 345   2          delay(20);
+ 346   2          P2=0x80>>1;P0=STID[6];
+ 347   2          delay(20);
+ 348   2          P2=0x80;P0=STID[7];
+ 349   2          delay(20);
+ 350   2        }
+ 351   1        for(i=0;i<420;i++)
+ 352   1        {
+ 353   2          P2=0x80>>7;P0=STID[1];
+ 354   2          delay(20);
+ 355   2          P2=0X80>>6;P0=STID[2];
+ 356   2          delay(20);
+ 357   2          P2=0x80>>5;P0=STID[3];
+ 358   2          delay(20);
+ 359   2          P2=0x80>>4;P0=STID[4];
+ 360   2          delay(20);
+ 361   2          P2=0x80>>3;P0=STID[5];
+ 362   2          delay(20);
+ 363   2          P2=0x80>>2;P0=STID[6];
+C51 COMPILER V9.59.0.0   TEST                                                              07/04/2021 23:34:04 PAGE 7   
+
+ 364   2          delay(20);
+ 365   2          P2=0x80>>1;P0=STID[7];
+ 366   2          delay(20);
+ 367   2          P2=0x80;P0=STID[8];
+ 368   2          delay(20);
+ 369   2        }
+ 370   1        for(j=0;j<420;j++)
+ 371   1        {
+ 372   2          P2=0x80>>7;P0=STID[2];
+ 373   2          delay(20);
+ 374   2          P2=0X80>>6;P0=STID[3];
+ 375   2          delay(20);
+ 376   2          P2=0x80>>5;P0=STID[4];
+ 377   2          delay(20);
+ 378   2          P2=0x80>>4;P0=STID[5];
+ 379   2          delay(20);
+ 380   2          P2=0x80>>3;P0=STID[6];
+ 381   2          delay(20);
+ 382   2          P2=0x80>>2;P0=STID[7];
+ 383   2          delay(20);
+ 384   2          P2=0x80>>1;P0=STID[8];
+ 385   2          delay(20);
+ 386   2          P2=0x80;P0=STID[9];
+ 387   2          delay(20);
+ 388   2        }
+ 389   1        for(k=0;k<420;k++)
+ 390   1        {
+ 391   2          P2=0x80>>7;P0=STID[3];
+ 392   2          delay(20);
+ 393   2          P2=0X80>>6;P0=STID[4];
+ 394   2          delay(20);
+ 395   2          P2=0x80>>5;P0=STID[5];
+ 396   2          delay(20);
+ 397   2          P2=0x80>>4;P0=STID[6];
+ 398   2          delay(20);
+ 399   2          P2=0x80>>3;P0=STID[7];
+ 400   2          delay(20);
+ 401   2          P2=0x80>>2;P0=STID[8];
+ 402   2          delay(20);
+ 403   2          P2=0x80>>1;P0=STID[9];
+ 404   2          delay(20);
+ 405   2          P2=0x80;P0=STID[10];
+ 406   2          delay(20);
+ 407   2        }
+ 408   1        for(l=0;l<420;l++)
+ 409   1        {
+ 410   2          P2=0x80>>7;P0=STID[4];
+ 411   2          delay(20);
+ 412   2          P2=0X80>>6;P0=STID[5];
+ 413   2          delay(20);
+ 414   2          P2=0x80>>5;P0=STID[6];
+ 415   2          delay(20);
+ 416   2          P2=0x80>>4;P0=STID[7];
+ 417   2          delay(20);
+ 418   2          P2=0x80>>3;P0=STID[8];
+ 419   2          delay(20);
+ 420   2          P2=0x80>>2;P0=STID[9];
+ 421   2          delay(20);
+ 422   2          P2=0x80>>1;P0=STID[10];
+ 423   2          delay(20);
+ 424   2          P2=0x80;P0=STID[11];
+ 425   2          delay(20);
+C51 COMPILER V9.59.0.0   TEST                                                              07/04/2021 23:34:04 PAGE 8   
+
+ 426   2        }
+ 427   1        for(m=0;m<420;m++)
+ 428   1        {
+ 429   2          P2=0x80>>7;P0=STID[5];
+ 430   2          delay(20);
+ 431   2          P2=0X80>>6;P0=STID[6];
+ 432   2          delay(20);
+ 433   2          P2=0x80>>5;P0=STID[7];
+ 434   2          delay(20);
+ 435   2          P2=0x80>>4;P0=STID[8];
+ 436   2          delay(20);
+ 437   2          P2=0x80>>3;P0=STID[9];
+ 438   2          delay(20);
+ 439   2          P2=0x80>>2;P0=STID[10];
+ 440   2          delay(20);
+ 441   2          P2=0x80>>1;P0=STID[11];
+ 442   2          delay(20);
+ 443   2          P2=0x80;P0=STID[12];
+ 444   2          delay(20);
+ 445   2        }
+ 446   1        for(n=0;n<420;n++)
+ 447   1        {
+ 448   2          P2=0x80>>7;P0=STID[6];
+ 449   2          delay(20);
+ 450   2          P2=0X80>>6;P0=STID[7];
+ 451   2          delay(20);
+ 452   2          P2=0x80>>5;P0=STID[8];
+ 453   2          delay(20);
+ 454   2          P2=0x80>>4;P0=STID[9];
+ 455   2          delay(20);
+ 456   2          P2=0x80>>3;P0=STID[10];
+ 457   2          delay(20);
+ 458   2          P2=0x80>>2;P0=STID[11];
+ 459   2          delay(20);
+ 460   2          P2=0x80>>1;P0=STID[12];
+ 461   2          delay(20);
+ 462   2          P2=0x80;P0=STID[13];
+ 463   2          delay(20);
+ 464   2        }
+ 465   1        for(o=0;o<420;o++)
+ 466   1        {
+ 467   2          P2=0x80>>7;P0=STID[7];
+ 468   2          delay(20);
+ 469   2          P2=0X80>>6;P0=STID[8];
+ 470   2          delay(20);
+ 471   2          P2=0x80>>5;P0=STID[9];
+ 472   2          delay(20);
+ 473   2          P2=0x80>>4;P0=STID[10];
+ 474   2          delay(20);
+ 475   2          P2=0x80>>3;P0=STID[11];
+ 476   2          delay(20);
+ 477   2          P2=0x80>>2;P0=STID[12];
+ 478   2          delay(20);
+ 479   2          P2=0x80>>1;P0=STID[13];
+ 480   2          delay(20);
+ 481   2          P2=0x80;P0=STID[14];
+ 482   2          delay(20);
+ 483   2        }
+ 484   1        for(p=0;p<420;p++)
+ 485   1        {
+ 486   2          P2=0x80>>7;P0=STID[8];
+ 487   2          delay(20);
+C51 COMPILER V9.59.0.0   TEST                                                              07/04/2021 23:34:04 PAGE 9   
+
+ 488   2          P2=0X80>>6;P0=STID[9];
+ 489   2          delay(20);
+ 490   2          P2=0x80>>5;P0=STID[10];
+ 491   2          delay(20);
+ 492   2          P2=0x80>>4;P0=STID[11];
+ 493   2          delay(20);
+ 494   2          P2=0x80>>3;P0=STID[12];
+ 495   2          delay(20);
+ 496   2          P2=0x80>>2;P0=STID[13];
+ 497   2          delay(20);
+ 498   2          P2=0x80>>1;P0=STID[14];
+ 499   2          delay(20);
+ 500   2          P2=0x80;P0=STID[15];
+ 501   2          delay(20);
+ 502   2        }
+ 503   1        for(q=0;q<200;q++)
+ 504   1        {
+ 505   2          P2=0x80>>7;P0=STID[9];
+ 506   2          delay(20);
+ 507   2          P2=0X80>>6;P0=STID[10];
+ 508   2          delay(20);
+ 509   2          P2=0x80>>5;P0=STID[11];
+ 510   2          delay(20);
+ 511   2          P2=0x80>>4;P0=STID[12];
+ 512   2          delay(20);
+ 513   2          P2=0x80>>3;P0=STID[13];
+ 514   2          delay(20);
+ 515   2          P2=0x80>>2;P0=STID[14];
+ 516   2          delay(20);
+ 517   2          P2=0x80>>1;P0=STID[15];
+ 518   2          delay(20);
+ 519   2          P2=0x80;P0=STID[16];
+ 520   2          delay(20);
+ 521   2        }
+ 522   1      }
+ 523          void delay(unsigned int a)
+ 524          {
+ 525   1        while(a--);
+ 526   1      }
+ 527          void delayms(unsigned int ms)
+ 528          {
+ 529   1        unsigned int a, b;
+ 530   1        for(a=0;a<ms;a++)
+ 531   1          for(b=845;b>0;b--);
+ 532   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   2386    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     35      52
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
